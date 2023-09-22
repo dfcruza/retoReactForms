@@ -12,12 +12,24 @@ function App() {
 
   const handleEmailChange = ((e) => {
     setFormValues({...formValues, email: e.target.value})
+    if(!e.target.value.contains("@")){
+      setErrorMessage({...errorMessage, email: false})
+      alert("Email is invalid")
+    } else { 
+      setErrorMessage({...errorMessage, email: true})
+      alert("Email is valid")
+    }
   });
 
   const handlePasswordChange = ((e) =>  {
     setFormValues({...formValues, password: e.target.value})
     if(e.target.value.length < 9&& e.target.value.match(/[a-z]/i) && e.target.value.match(/[0-9]/i)){
+      setErrorMessage({...errorMessage, password: false})
+      alert("Password is not valid")
+    }
+    else{ 
       setErrorMessage({...errorMessage, password: true})
+      alert("Password is valid")
     }
   });
 
