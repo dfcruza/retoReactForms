@@ -23,7 +23,8 @@ function App() {
 
   const handlePasswordChange = ((e) =>  {
     setFormValues({...formValues, password: e.target.value})
-    if(e.target.value.length < 9 && e.target.value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/) && e.target.value.match(/[0-9]/i)){
+    const passwordRegex = /^(?!^[0-9]$)(?!^[a-zA-Z]$)^([a-zA-Z0-9]{6,15})$/gm;
+    if(e.target.value.length < 9 && e.target.value.match(passwordRegex)){
       setErrorMessage({...errorMessage, password: false})
       alert("Password is not valid")
     }
@@ -62,13 +63,13 @@ return (
      
     <Form>
     <Form.Group className="mb-6" controlId="formBasicEmail">
-      <Form.Label>Email address</Form.Label>        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} value={formValues.email}/>
+      <Form.Label>Email address</Form.Label>        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} value={formValues.email} isValid ={!(errorMessage.email)} isInvalid = {errorMessage.email}/>
         { !validationStates.emailState && <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>}
       </Form.Group>
  
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} value={formValues.password} />
+        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} value={formValues.password} isValid = {errorMessage.password} isInvalid = {!errorMessage.password} />
         { !validationStates.passwordState && <Form.Text className="text-muted">Your password should be have numbers and letters and should be at least 9 char long</Form.Text>}
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
